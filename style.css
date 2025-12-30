@@ -1,112 +1,90 @@
 * {
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
   margin: 0;
-  background: #f4f7f6;
+  background: #eef4f1;
 }
 
-/* HERO */
-.hero {
+/* BACKGROUND */
+.bg {
+  position: fixed;
+  inset: 0;
   background: linear-gradient(135deg, #1b5e20, #43a047);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  z-index: -1;
 }
 
-.hero-box {
-  background: white;
-  padding: 35px;
-  max-width: 480px;
-  width: 100%;
-  border-radius: 12px;
+/* WRAPPER */
+.wrapper {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px 15px;
+}
+
+/* INPUT CARD */
+.card-input {
+  background: #fff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.15);
   text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,.2);
 }
 
-.hero-box h1 {
+.card-input h1 {
   color: #1b5e20;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-.hero-box p {
+.subtitle {
   font-size: 14px;
-  color: #555;
+  color: #666;
 }
 
-.hero-box input {
+.card-input input {
   width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  border-radius: 6px;
+  padding: 14px;
+  margin-top: 20px;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-.hero-box button {
+.card-input button {
   width: 100%;
   margin-top: 15px;
-  padding: 12px;
-  background: #2e7d32;
-  color: white;
+  padding: 14px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
+  background: #2e7d32;
+  color: #fff;
   font-size: 16px;
   cursor: pointer;
 }
 
-.hero-box button:hover {
+.card-input button:hover {
   background: #1b5e20;
 }
 
-.info-text {
+.info-warning {
   margin-top: 15px;
   font-size: 12px;
-  color: #666;
-}
-
-/* LOADING */
-.loading {
-  position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,.85);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #c8e6c9;
-  border-top: 5px solid #2e7d32;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  color: #555;
 }
 
 /* HASIL */
 .hasil {
-  padding: 30px;
+  margin-top: 30px;
 }
 
-.card {
-  background: white;
-  max-width: 900px;
-  margin: auto;
+.card-hasil {
+  background: #fff;
   padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.12);
 }
 
+/* TABLE */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -115,27 +93,82 @@ table {
 
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
 }
 
 th {
   background: #e8f5e9;
 }
 
-.lunas { color: green; font-weight: 600; }
-.belum { color: red; font-weight: 600; }
+/* STATUS */
+.lunas { color: #2e7d32; font-weight: 600; }
+.belum { color: #c62828; font-weight: 600; }
+
+/* REKAP */
+.rekap {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.box {
+  flex: 1;
+  padding: 15px;
+  border-radius: 10px;
+}
 
 .hijau { background: #e8f5e9; }
 .merah { background: #ffebee; }
 
+/* PRINT */
 .btn-print {
-  display: block;
-  max-width: 300px;
   margin: 20px auto;
-  padding: 12px;
-  background: #2e7d32;
-  color: white;
+  display: block;
+  padding: 14px;
+  max-width: 320px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 16px;
   cursor: pointer;
+}
+
+/* LOADING OVERLAY */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.loading-overlay.show {
+  display: flex;
+}
+
+/* SPINNER LINGKARAN */
+.loader {
+  width: 64px;
+  height: 64px;
+  border: 6px solid #c8e6c9;
+  border-top: 6px solid #2e7d32;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .rekap {
+    flex-direction: column;
+  }
 }
