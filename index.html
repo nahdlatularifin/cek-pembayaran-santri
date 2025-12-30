@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Cek Pembayaran Santri</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Library PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -11,47 +14,11 @@
   <h2>CEK PEMBAYARAN SANTRI</h2>
 
   <input id="no" placeholder="Masukkan Nomor Pembayaran">
-  <button onclick="cek()">Cek Pembayaran</button>
+  <button onclick="cek()">Cek</button>
 
-  <div id="card" style="display:none">
-
-    <table class="info">
-      <tr><td>No Pembayaran</td><td>: <b id="vno"></b></td></tr>
-      <tr><td>Nama</td><td>: <b id="vnama"></b></td></tr>
-      <tr><td>Alamat</td><td>: <b id="valamat"></b></td></tr>
-      <tr><td>Asrama</td><td>: <b id="vasrama"></b></td></tr>
-      <tr><td>Status</td><td>: <b id="vstatus"></b></td></tr>
-      <tr><td>Tagihan</td><td>: <b id="vtagihan"></b></td></tr>
-      <tr><td>Keterangan</td><td>: <span id="vket"></span></td></tr>
-    </table>
-
-    <table class="detail">
-      <thead>
-        <tr>
-          <th>Jenis Pembayaran</th>
-          <th>Nominal</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
-
-    <table class="rekap">
-      <tr class="hijau">
-        <td>TOTAL TERBAYAR</td>
-        <td id="vbayar"></td>
-      </tr>
-      <tr class="merah">
-        <td>SISA TAGIHAN</td>
-        <td id="vsisa"></td>
-      </tr>
-    </table>
-
-    <button class="print" onclick="window.print()">🖨️ CETAK / PDF</button>
-
-  </div>
+  <div id="hasil" style="display:none"></div>
 </div>
 
-<script src="./script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
