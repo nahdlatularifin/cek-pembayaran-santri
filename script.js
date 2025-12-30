@@ -92,3 +92,4 @@ function cetakPDF() {
     jsPDF: { format: "a4", orientation: "portrait" }
   }).save();
 }
+
