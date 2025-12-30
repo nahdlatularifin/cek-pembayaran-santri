@@ -44,3 +44,4 @@ function cek() {
     .catch(() => alert("Gagal mengambil data"));
 }
 
+
