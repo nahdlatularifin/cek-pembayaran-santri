@@ -5,7 +5,7 @@ function cek() {
     return;
   }
 
-  const url = "https://script.google.com/macros/s/AKfycbzaHaFXmw_MWqW2gG5b5QTTipn3dQn7RfU6axSN76p7KqyF24O90V1RlqnxgEeVk4CZhw/exec" + encodeURIComponent(no);
+  const url = "https://script.google.com/macros/s/AKfycbzaHaFXmw_MWqW2gG5b5QTTipn3dQn7RfU6axSN76p7KqyF24O90V1RlqnxgEeVk4CZhw/exec?=no" + encodeURIComponent(no);
 
   fetch(url)
     .then(res => res.json())
@@ -43,5 +43,6 @@ function cek() {
     })
     .catch(() => alert("Gagal mengambil data"));
 }
+
 
 
