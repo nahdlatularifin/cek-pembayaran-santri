@@ -3,21 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <title>Cek Pembayaran Santri</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Library PDF -->
+  <!-- PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-<div class="container">
-  <h2>CEK PEMBAYARAN SANTRI</h2>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-box">
+    <h1>CEK PEMBAYARAN SANTRI</h1>
+    <p>Sistem Informasi Keuangan Santri<br>Pondok Pesantren Nahdlatul Arifin</p>
 
-  <input id="no" placeholder="Masukkan Nomor Pembayaran">
-  <button onclick="cek()">Cek</button>
+    <input id="no" placeholder="Masukkan Nomor Pembayaran">
+    <button onclick="cek()">🔍 Cek Pembayaran</button>
 
-  <div id="hasil" style="display:none"></div>
+    <div class="info-text">
+      APABILA DATA TIDAK SESUAI SILAHKAN TANYAKAN KEPADA NOMOR KETUA ASRAMA MASING-MASING !  
+      BISA JADI DATA YANG TAMPIL BELUM DATA TERBARU MASIH BELUM DI INPUT OLEH BENDAHARA.  
+      <br><b>TERIMAKASIH</b>
+    </div>
+  </div>
+</section>
+
+<!-- LOADING -->
+<div id="loading" class="loading" style="display:none">
+  <div class="spinner"></div>
+  <p>Memuat data pembayaran...</p>
 </div>
+
+<!-- HASIL -->
+<section class="hasil">
+  <div id="hasil" style="display:none"></div>
+</section>
 
 <script src="script.js"></script>
 </body>
