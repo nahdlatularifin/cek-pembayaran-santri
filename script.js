@@ -1,70 +1,82 @@
-<script>
-function cek() {
-  const no = document.getElementById("no").value.trim();
+// 🔍 Penanda file berhasil dimuat
+console.log("script.js loaded");
 
-  if (!no) {
-    alert("Masukkan No Pembayaran");
+// ⬇️ WAJIB GLOBAL (jangan dibungkus function lain)
+function cek() {
+  console.log("fungsi cek() terpanggil");
+
+  const noInput = document.getElementById("no");
+  if (!noInput) {
+    alert("Input NO tidak ditemukan");
     return;
   }
 
-  const url = "https://script.google.com/macros/s/AKfycbxoGr7rhUBHaf4xQCp1i7Qj2jSio3e8vGJtlDDzZQmHj6inf0fzGHcPDZZpoTzuM-FkNg/exec?no=" + encodeURIComponent(no);
+  const no = noInput.value.trim();
+  if (!no) {
+    alert("Masukkan Nomor Pembayaran");
+    return;
+  }
 
-  fetch(url)
-    .then(r => r.json())
-    .then(d => {
+  const url =
+    "https://script.google.com/macros/s/AKfycbxoGr7rhUBHaf4xQCp1i7Qj2jSio3e8vGJtlDDzZQmHj6inf0fzGHcPDZZpoTzuM-FkNg/exec"
+    + "?no=" + encodeURIComponent(no);
 
-      // 🔴 Jika data tidak ditemukan
-      if (d.error) {
-        alert(d.error);
-        document.getElementById("card").style.display = "none";
-        return;
-      }
+  fetch(url, {
+    method: "GET",
+    redirect: "follow"
+  })
+  .then(res => res.text())
+  .then(text => {
+    let d;
+    try {
+      d = JSON.parse(text);
+    } catch (e) {
+      alert("Respon server tidak valid");
+      console.error(text);
+      return;
+    }
 
-      // 🔗 Ambil elemen
-      const vno = document.getElementById("vno");
-      const vnama = document.getElementById("vnama");
-      const valamat = document.getElementById("valamat");
-      const vasrama = document.getElementById("vasrama");
-      const vstatus = document.getElementById("vstatus");
-      const vtagihan = document.getElementById("vtagihan");
-      const vket = document.getElementById("vket");
-      const tbody = document.getElementById("tbody");
-      const vbayar = document.getElementById("vbayar");
-      const vsisa = document.getElementById("vsisa");
+    if (d.error) {
+      alert(d.error);
+      return;
+    }
 
-      document.getElementById("card").style.display = "block";
+    // 🔓 Tampilkan kartu
+    document.getElementById("card").style.display = "block";
 
-      // 🔹 Data utama
-      vno.innerText = d.no;
-      vnama.innerText = d.nama;
-      valamat.innerText = d.alamat;
-      vasrama.innerText = d.asrama;
-      vstatus.innerText = d.statusSantri || "-";
+    document.getElementById("vno").innerText = d.no || "-";
+    document.getElementById("vnama").innerText = d.nama || "-";
+    document.getElementById("valamat").innerText = d.alamat || "-";
+    document.getElementById("vasrama").innerText = d.asrama || "-";
+    document.getElementById("vstatus").innerText = d.statusSantri || "-";
 
-      vtagihan.innerText = "Rp " + (d.tagihan || 0).toLocaleString("id-ID");
-      vket.innerText = d.keterangan;
-      vket.className = d.keterangan === "LUNAS" ? "lunas" : "belum";
+    document.getElementById("vtagihan").innerText =
+      "Rp " + (d.tagihan || 0).toLocaleString("id-ID");
 
-      // 🔹 Rincian pembayaran
-      tbody.innerHTML = "";
-      d.rincian.forEach(r => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${r.nama}</td>
-            <td>Rp ${(r.nominal || 0).toLocaleString("id-ID")}</td>
-            <td class="${r.status === "LUNAS" ? "lunas" : "belum"}">${r.status}</td>
-          </tr>
-        `;
-      });
+    const vket = document.getElementById("vket");
+    vket.innerText = d.keterangan || "-";
+    vket.className = d.keterangan === "LUNAS" ? "lunas" : "belum";
 
-      // 🔹 Rekap
-      vbayar.innerText = "Rp " + (d.totalTerbayar || 0).toLocaleString("id-ID");
-      vsisa.innerText = "Rp " + (d.totalBelum || 0).toLocaleString("id-ID");
+    const tbody = document.getElementById("tbody");
+    tbody.innerHTML = "";
 
-    })
-    .catch(err => {
-      alert("Gagal mengambil data");
-      console.error(err);
+    d.rincian.forEach(r => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${r.nama}</td>
+          <td>Rp ${(r.nominal || 0).toLocaleString("id-ID")}</td>
+          <td class="${r.status === "LUNAS" ? "lunas" : "belum"}">${r.status}</td>
+        </tr>`;
     });
+
+    document.getElementById("vbayar").innerText =
+      "Rp " + (d.totalTerbayar || 0).toLocaleString("id-ID");
+
+    document.getElementById("vsisa").innerText =
+      "Rp " + (d.totalBelum || 0).toLocaleString("id-ID");
+  })
+  .catch(err => {
+    alert("Gagal menghubungi server");
+    console.error(err);
+  });
 }
-</script>
