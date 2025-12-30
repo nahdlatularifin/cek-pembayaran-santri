@@ -5,8 +5,8 @@
   <title>Cek Pembayaran Santri</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
@@ -16,33 +16,37 @@
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-box">
-    <h1>CEK PEMBAYARAN SANTRI</h1>
-    <p>Sistem Informasi Keuangan Santri<br>Pondok Pesantren Nahdlatul Arifin</p>
+<!-- BACKGROUND -->
+<div class="bg"></div>
 
-    <input id="no" placeholder="Masukkan Nomor Pembayaran">
-    <button onclick="cek()">🔍 Cek Pembayaran</button>
+<!-- MAIN CARD -->
+<div class="wrapper">
+  <div class="card-input">
+    <h1>Cek Pembayaran Santri</h1>
+    <p class="subtitle">
+      Sistem Informasi Keuangan Santri<br>
+      Pondok Pesantren Nahdlatul Arifin
+    </p>
 
-    <div class="info-text">
-      APABILA DATA TIDAK SESUAI SILAHKAN TANYAKAN KEPADA NOMOR KETUA ASRAMA MASING-MASING !  
-      BISA JADI DATA YANG TAMPIL BELUM DATA TERBARU MASIH BELUM DI INPUT OLEH BENDAHARA.  
-      <br><b>TERIMAKASIH</b>
-    </div>
+    <input id="no" type="text" placeholder="Masukkan Nomor Pembayaran">
+    <button onclick="cek()">Cek Pembayaran</button>
+
+    <p class="info-warning">
+      APABILA DATA TIDAK SESUAI SILAHKAN TANYAKAN KEPADA NOMOR KETUA ASRAMA MASING-MASING.
+      BISA JADI DATA YANG TAMPIL BELUM DATA TERBARU DAN BELUM DI INPUT OLEH BENDAHARA.
+      <br><b>TERIMA KASIH.</b>
+    </p>
   </div>
-</section>
 
-<!-- LOADING -->
-<div id="loading" class="loading" style="display:none">
-  <div class="spinner"></div>
-  <p>Memuat data pembayaran...</p>
+  <!-- HASIL -->
+  <div id="hasil" class="hasil" style="display:none"></div>
 </div>
 
-<!-- HASIL -->
-<section class="hasil">
-  <div id="hasil" style="display:none"></div>
-</section>
+<!-- LOADING FULLSCREEN -->
+<div id="loading" class="loading-overlay">
+  <div class="loader"></div>
+  <span>Memuat data pembayaran...</span>
+</div>
 
 <script src="script.js"></script>
 </body>
