@@ -7,26 +7,34 @@ function cek() {
     return;
   }
 
+  document.getElementById("hasil").style.display = "none";
+  document.getElementById("loading").style.display = "flex";
+
   fetch(`${API_URL}?no=${encodeURIComponent(no)}`)
     .then(res => res.json())
     .then(data => {
+      document.getElementById("loading").style.display = "none";
+
       if (data.error) {
         alert(data.error);
         return;
       }
+
       tampilkan(data);
     })
     .catch(err => {
-      console.error(err);
+      document.getElementById("loading").style.display = "none";
       alert("Gagal mengambil data");
+      console.error(err);
     });
 }
 
 function tampilkan(d) {
-  document.getElementById("hasil").style.display = "block";
+  const el = document.getElementById("hasil");
+  el.style.display = "block";
 
-  document.getElementById("hasil").innerHTML = `
-    <div id="area-cetak">
+  el.innerHTML = `
+    <div id="area-cetak" class="card">
       <h3>Bukti Pembayaran Santri</h3>
 
       <table class="info">
@@ -34,7 +42,7 @@ function tampilkan(d) {
         <tr><td>Nama</td><td>: ${d.nama}</td></tr>
         <tr><td>Alamat</td><td>: ${d.alamat}</td></tr>
         <tr><td>Asrama</td><td>: ${d.asrama}</td></tr>
-        <tr><td>Status</td><td>: ${d.keterangan}</td></tr>
+        <tr><td>Keterangan</td><td>: <b class="${d.keterangan === "LUNAS" ? "lunas" : "belum"}">${d.keterangan}</b></td></tr>
       </table>
 
       <table class="detail">
@@ -68,17 +76,14 @@ function tampilkan(d) {
       </table>
     </div>
 
-    <button onclick="cetakPDF()">🖨 Cetak / Simpan PDF</button>
+    <button class="btn-print" onclick="cetakPDF()">🖨 Cetak / Simpan PDF</button>
   `;
 }
 
 function cetakPDF() {
-  const element = document.getElementById("area-cetak");
-
-  html2pdf().set({
-    margin: 10,
+  html2pdf().from(document.getElementById("area-cetak")).set({
     filename: "bukti-pembayaran-santri.pdf",
-    html2canvas: { scale: 2 },
-    jsPDF: { format: "a4", orientation: "portrait" }
-  }).from(element).save();
+    margin: 10,
+    jsPDF: { format: "a4" }
+  }).save();
 }
