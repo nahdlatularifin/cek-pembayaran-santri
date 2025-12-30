@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Cek Pembayaran Santri</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Cek Pembayaran Santri</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
 <div class="container">
-<h2>CEK PEMBAYARAN SANTRI</h2>
+  <h2>CEK PEMBAYARAN SANTRI</h2>
 
-<input id="no" placeholder="Masukkan Nomor Pembayaran">
-<button type="button" onclick="cek()">Cek</button>
+  <input id="no" placeholder="Masukkan Nomor Pembayaran">
+  <button onclick="cek()">Cek Pembayaran</button>
 
-<div id="card" style="display:none">
+  <div id="card" style="display:none">
 
-<table class="info">
-<tr><td>Nomor Urut Pembayaran</td><td>: <b id="vno"></b></td></tr>
-<tr><td>Nama Lengkap</td><td>: <b id="vnama"></b></td></tr>
-<tr><td>Alamat</td><td>: <b id="valamat"></b></td></tr>
-<tr><td>Asrama</td><td>: <b id="vasrama"></b></td></tr>
-<tr><td>Status</td><td>: <b id="vstatus"></b></td></tr>
-<tr><td>Tagihan Wajib</td><td>: <b id="vtagihan"></b></td></tr>
-<tr><td>Keterangan</td><td>: <span id="vket"></span></td></tr>
-</table>
+    <table class="info">
+      <tr><td>No Pembayaran</td><td>: <b id="vno"></b></td></tr>
+      <tr><td>Nama</td><td>: <b id="vnama"></b></td></tr>
+      <tr><td>Alamat</td><td>: <b id="valamat"></b></td></tr>
+      <tr><td>Asrama</td><td>: <b id="vasrama"></b></td></tr>
+      <tr><td>Status</td><td>: <b id="vstatus"></b></td></tr>
+      <tr><td>Tagihan</td><td>: <b id="vtagihan"></b></td></tr>
+      <tr><td>Keterangan</td><td>: <span id="vket"></span></td></tr>
+    </table>
 
-<table class="detail">
-<thead>
-<tr><th>Keterangan</th><th>Nominal</th><th>Status</th></tr>
-</thead>
-<tbody id="tbody"></tbody>
-</table>
+    <table class="detail">
+      <thead>
+        <tr>
+          <th>Jenis Pembayaran</th>
+          <th>Nominal</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
 
-<table class="rekap">
-<tr class="hijau"><td>JUMLAH TERBAYAR</td><td id="vbayar"></td></tr>
-<tr class="merah"><td>JUMLAH BELUM TERBAYAR</td><td id="vsisa"></td></tr>
-</table>
+    <table class="rekap">
+      <tr class="hijau">
+        <td>TOTAL TERBAYAR</td>
+        <td id="vbayar"></td>
+      </tr>
+      <tr class="merah">
+        <td>SISA TAGIHAN</td>
+        <td id="vsisa"></td>
+      </tr>
+    </table>
 
-<button type="button" onclick="window.print()">🖨️ CETAK / PDF</button>
+    <button class="print" onclick="window.print()">🖨️ CETAK / PDF</button>
 
+  </div>
 </div>
-</div>
 
-<script src="script.js"></script>
-<script>
-console.log("index.html loaded");
-</script>
-
+<script src="./script.js"></script>
 </body>
 </html>
