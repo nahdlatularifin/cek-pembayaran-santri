@@ -1,36 +1,40 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f2f2f2;
+  background: #f4f6f8;
 }
 
 .container {
-  max-width: 800px;
-  margin: auto;
+  max-width: 700px;
   background: #fff;
   padding: 20px;
+  margin: 30px auto;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h2 {
+h2, h3 {
   text-align: center;
 }
 
 input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 button {
-  padding: 10px 15px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
   background: #2e7d32;
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-button.print {
-  background: #1565c0;
-  margin-top: 15px;
+button:hover {
+  background: #1b5e20;
 }
 
 table {
@@ -39,13 +43,17 @@ table {
   margin-top: 15px;
 }
 
-td, th {
+table, th, td {
   border: 1px solid #ccc;
-  padding: 8px;
 }
 
-th {
-  background: #eee;
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+.info td {
+  border: none;
 }
 
 .lunas {
@@ -68,14 +76,4 @@ th {
 
 .merah {
   background: #ffebee;
-}
-
-/* KHUSUS CETAK PDF */
-@media print {
-  input, button {
-    display: none;
-  }
-  body {
-    background: white;
-  }
 }
