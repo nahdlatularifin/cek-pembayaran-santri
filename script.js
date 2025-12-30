@@ -1,6 +1,6 @@
 function cek() {
   const no = document.getElementById("no").value;
-  const url = "PASTE_URL_APPS_SCRIPT?no=" + no;
+  const url = "https://script.google.com/macros/s/AKfycbxoGr7rhUBHaf4xQCp1i7Qj2jSio3e8vGJtlDDzZQmHj6inf0fzGHcPDZZpoTzuM-FkNg/execno=" + no;
 
   fetch(url)
   .then(r=>r.json())
@@ -29,3 +29,4 @@ function cek() {
     vsisa.innerText="Rp "+d.totalBelum.toLocaleString();
   });
 }
+
