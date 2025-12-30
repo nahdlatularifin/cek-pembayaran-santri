@@ -11,7 +11,7 @@
 <h2>CEK PEMBAYARAN SANTRI</h2>
 
 <input id="no" placeholder="Masukkan Nomor Pembayaran">
-<button onclick="cek()">Cek</button>
+<button type="button" onclick="cek()">Cek</button>
 
 <div id="card" style="display:none">
 
@@ -37,11 +37,15 @@
 <tr class="merah"><td>JUMLAH BELUM TERBAYAR</td><td id="vsisa"></td></tr>
 </table>
 
-<button onclick="window.print()">🖨️ CETAK / PDF</button>
+<button type="button" onclick="window.print()">🖨️ CETAK / PDF</button>
 
 </div>
 </div>
 
 <script src="script.js"></script>
+<script>
+console.log("index.html loaded");
+</script>
+
 </body>
 </html>
