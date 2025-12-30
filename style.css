@@ -1,14 +1,81 @@
-body { font-family: Arial; background:#eee; }
-.container { background:#fff; max-width:900px; margin:auto; padding:20px; }
-table { width:100%; border-collapse:collapse; margin-top:10px; }
-td,th { border:1px solid #000; padding:6px; text-align:center; }
-.info td { border:none; text-align:left; }
-.lunas { background:#4CAF50; color:#fff; font-weight:bold; }
-.belum { background:#E53935; color:#fff; font-weight:bold; }
-.hijau { background:#8BC34A; font-weight:bold; }
-.merah { background:#F44336; color:#fff; font-weight:bold; }
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
 
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button.print {
+  background: #1565c0;
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+td, th {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+th {
+  background: #eee;
+}
+
+.lunas {
+  color: green;
+  font-weight: bold;
+}
+
+.belum {
+  color: red;
+  font-weight: bold;
+}
+
+.rekap td {
+  font-weight: bold;
+}
+
+.hijau {
+  background: #e8f5e9;
+}
+
+.merah {
+  background: #ffebee;
+}
+
+/* KHUSUS CETAK PDF */
 @media print {
-  button, input { display:none; }
-  body { background:#fff; }
+  input, button {
+    display: none;
+  }
+  body {
+    background: white;
+  }
 }
