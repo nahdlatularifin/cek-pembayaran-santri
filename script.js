@@ -7,7 +7,6 @@ function cek() {
     return;
   }
 
-  // tampilkan loading
   document.getElementById("loading").classList.add("show");
   document.getElementById("hasil").style.display = "none";
 
@@ -25,7 +24,7 @@ function cek() {
     })
     .catch(() => {
       document.getElementById("loading").classList.remove("show");
-      alert("Gagal mengambil data. Silakan coba lagi.");
+      alert("Gagal mengambil data");
     });
 }
 
@@ -35,11 +34,16 @@ function render(d) {
 
   el.innerHTML = `
     <div id="area-cetak" class="card-hasil">
-      <h2>Bukti Pembayaran Santri</h2>
+      <h2>Kartu Pembayaran Santri</h2>
+
+      <div class="meta">
+        <span id="no-dokumen"></span>
+        <span id="tgl-cetak"></span>
+      </div>
 
       <table class="info">
         <tr><td>Nomor</td><td>${d.no}</td></tr>
-        <tr><td>Nama</td><td>${d.nama}</td></tr>
+        <tr><td>Nama</td><td id="nama-santri">${d.nama}</td></tr>
         <tr><td>Alamat</td><td>${d.alamat}</td></tr>
         <tr><td>Asrama</td><td>${d.asrama}</td></tr>
         <tr>
@@ -81,15 +85,66 @@ function render(d) {
       </div>
     </div>
 
-    <button class="btn-print" onclick="cetakPDF()">Cetak / Simpan PDF</button>
+    <button class="btn-print" onclick="cetakPDF()">🖨 Cetak / Simpan PDF</button>
   `;
+
+  generateDokumen(d.no);
 }
 
+/* ===============================
+   NOMOR DOKUMEN & TANGGAL CETAK
+   =============================== */
+function generateDokumen(noPembayaran) {
+  const now = new Date();
+
+  const tanggalCetak = now.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+
+  const ymd =
+    now.getFullYear().toString() +
+    String(now.getMonth() + 1).padStart(2, "0") +
+    String(now.getDate()).padStart(2, "0");
+
+  const random = Math.floor(1000 + Math.random() * 9000);
+  const noDokumen = `KP-${ymd}-${noPembayaran}-${random}`;
+
+  document.getElementById("no-dokumen").innerText =
+    `Nomor Dokumen : ${noDokumen}`;
+
+  document.getElementById("tgl-cetak").innerText =
+    `Tanggal Cetak : ${tanggalCetak}`;
+}
+
+/* ===============================
+   CETAK PDF (1 HALAMAN, AMAN)
+   =============================== */
 function cetakPDF() {
-  html2pdf().from(document.getElementById("area-cetak")).set({
-    filename: "bukti-pembayaran-santri.pdf",
-    margin: 10,
-    jsPDF: { format: "a4", orientation: "portrait" }
-  }).save();
-}
+  const element = document.getElementById("area-cetak");
+  const nama = document.getElementById("nama-santri").innerText
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .trim();
 
+  const opt = {
+    margin: [10, 10, 10, 10],
+    filename: `kartu pembayaran santri (${nama}).pdf`,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      scrollY: 0
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait"
+    },
+    pagebreak: { mode: ["avoid-all"] }
+  };
+
+  setTimeout(() => {
+    html2pdf().set(opt).from(element).save();
+  }, 300);
+}
