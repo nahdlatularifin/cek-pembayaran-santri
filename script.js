@@ -29,7 +29,7 @@ function cek() {
       vnama.innerText = d.nama;
       valamat.innerText = d.alamat;
       vasrama.innerText = d.asrama;
-      vstatus.innerText = d.statusSantri;
+      vstatus.innerText = d.status;
       vtagihan.innerText = "Rp " + d.tagihan.toLocaleString();
       vket.innerText = d.keterangan;
       vket.className = d.keterangan === "LUNAS" ? "lunas" : "belum";
@@ -93,4 +93,5 @@ function isiPDF(d) {
 function cetakPDF() {
   window.print();
 }
+
 
