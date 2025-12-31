@@ -148,3 +148,30 @@ table {
     display: none !important;
   }
 }
+
+/* ===== AREA CETAK ===== */
+#area-cetak {
+  display: none;
+  width: 190mm;
+  font-size: 11px;
+}
+
+/* KHUSUS SAAT PRINT */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #area-cetak,
+  #area-cetak * {
+    visibility: visible;
+  }
+
+  #area-cetak {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    page-break-after: avoid;
+  }
+}
