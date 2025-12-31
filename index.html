@@ -1,57 +1,91 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Cek Pembayaran Santri</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cek Pembayaran Santri</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<!-- BACKGROUND -->
-<div class="bg"></div>
+<!-- LOADING -->
+<div id="loading">
+  <div class="spinner"></div>
+  <p>Memuat data pembayaran...</p>
+</div>
 
-<!-- MAIN CARD -->
-<div class="wrapper">
-  <div class="card-input">
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
     <h1>Cek Pembayaran Santri</h1>
-    <p class="subtitle">
-      Sistem Informasi Keuangan Santri<br>
-      Pondok Pesantren Nahdlatul Arifin
-    </p>
+    <p>Pondok Pesantren Nahdlatul Arifin</p>
+  </div>
 
+  <!-- FORM -->
+  <div class="search-box">
     <input id="no" type="text" placeholder="Masukkan Nomor Pembayaran">
     <button onclick="cek()">Cek Pembayaran</button>
 
-    <p class="info-warning">
-      APABILA DATA TIDAK SESUAI SILAHKAN TANYAKAN KEPADA NOMOR KETUA ASRAMA MASING-MASING.
-      BISA JADI DATA YANG TAMPIL BELUM DATA TERBARU DAN BELUM DI INPUT OLEH BENDAHARA.
-      <br><b>TERIMA KASIH.</b>
+    <p class="info-text">
+      APABILA DATA TIDAK SESUAI SILAHKAN TANYAKAN KEPADA NOMOR KETUA ASRAMA MASING-MASING !
+      BISA JADI DATA YANG TAMPIL BELUM DATA TERBARU MASIH BELUM DI INPUT OLEH BENDAHARA.
+      TERIMA KASIH
     </p>
   </div>
 
-  <!-- HASIL -->
-  <div id="hasil" class="hasil" style="display:none"></div>
+  <!-- KARTU DATA -->
+  <div id="card" class="card" style="display:none">
+
+    <table class="info">
+      <tr><td>No Pembayaran</td><td>: <b id="vno"></b></td></tr>
+      <tr><td>Nama Santri</td><td>: <b id="vnama"></b></td></tr>
+      <tr><td>Alamat</td><td>: <b id="valamat"></b></td></tr>
+      <tr><td>Asrama</td><td>: <b id="vasrama"></b></td></tr>
+      <tr><td>Status</td><td>: <b id="vstatus"></b></td></tr>
+      <tr><td>Tagihan</td><td>: <b id="vtagihan"></b></td></tr>
+      <tr><td>Keterangan</td><td>: <span id="vket"></span></td></tr>
+    </table>
+
+    <h3>Rincian Pembayaran</h3>
+
+    <table class="detail">
+      <thead>
+        <tr>
+          <th>Keterangan</th>
+          <th>Nominal</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+
+    <table class="rekap">
+      <tr class="hijau">
+        <td>Total Terbayar</td>
+        <td id="vbayar"></td>
+      </tr>
+      <tr class="merah">
+        <td>Sisa Tanggungan</td>
+        <td id="vsisa"></td>
+      </tr>
+    </table>
+
+    <div class="aksi">
+      <button class="cetak" onclick="cetakPDF()">🖨️ Cetak / PDF</button>
+    </div>
+
+  </div>
 </div>
 
-<!-- LOADING FULLSCREEN -->
-<div id="loading" class="loading-overlay">
-  <div class="loader"></div>
-  <span>Memuat data pembayaran...</span>
-</div>
-
-<script src="script.js"></script>
-  <!-- AREA KHUSUS CETAK PDF -->
+<!-- ======================
+     AREA KHUSUS CETAK PDF
+     ====================== -->
 <div id="area-cetak">
-  <h2>KARTU PEMBAYARAN SANTRI</h2>
+  <h2 style="text-align:center">KARTU PEMBAYARAN SANTRI</h2>
 
   <p><b>Nama Santri:</b> <span id="pdf-nama"></span></p>
   <p><b>Nomor Pembayaran:</b> <span id="pdf-no"></span></p>
@@ -72,12 +106,11 @@
   <p><b>Sisa Tanggungan:</b> <span id="pdf-sisa"></span></p>
 
   <p style="font-size:11px">
-    Dokumen: <span id="pdf-doc"></span><br>
+    Nomor Dokumen: <span id="pdf-doc"></span><br>
     Dicetak: <span id="pdf-tanggal"></span>
   </p>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>
-
-
