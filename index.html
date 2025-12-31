@@ -49,6 +49,35 @@
 </div>
 
 <script src="script.js"></script>
+  <!-- AREA KHUSUS CETAK PDF -->
+<div id="area-cetak">
+  <h2>KARTU PEMBAYARAN SANTRI</h2>
+
+  <p><b>Nama Santri:</b> <span id="pdf-nama"></span></p>
+  <p><b>Nomor Pembayaran:</b> <span id="pdf-no"></span></p>
+  <p><b>Asrama:</b> <span id="pdf-asrama"></span></p>
+
+  <table border="1" width="100%" cellspacing="0" cellpadding="4">
+    <thead>
+      <tr>
+        <th>Pembayaran</th>
+        <th>Nominal</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="pdf-rincian"></tbody>
+  </table>
+
+  <p><b>Total Terbayar:</b> <span id="pdf-bayar"></span></p>
+  <p><b>Sisa Tanggungan:</b> <span id="pdf-sisa"></span></p>
+
+  <p style="font-size:11px">
+    Dokumen: <span id="pdf-doc"></span><br>
+    Dicetak: <span id="pdf-tanggal"></span>
+  </p>
+</div>
+
 </body>
 </html>
+
 
