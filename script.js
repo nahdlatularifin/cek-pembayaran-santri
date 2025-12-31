@@ -3,147 +3,93 @@ const API_URL = "https://script.google.com/macros/s/AKfycbzaHaFXmw_MWqW2gG5b5QTT
 function cek() {
   const no = document.getElementById("no").value.trim();
   if (!no) {
-    alert("Nomor pembayaran wajib diisi");
+    alert("Masukkan Nomor Pembayaran!");
     return;
   }
 
-  document.getElementById("loading").classList.add("show");
-  document.getElementById("hasil").style.display = "none";
+  // loading ON
+  document.getElementById("loading").style.display = "flex";
+  document.getElementById("card").style.display = "none";
 
   fetch(`${API_URL}?no=${encodeURIComponent(no)}`)
     .then(res => res.json())
-    .then(data => {
-      document.getElementById("loading").classList.remove("show");
+    .then(d => {
+      document.getElementById("loading").style.display = "none";
 
-      if (data.error) {
-        alert(data.error);
+      if (d.error) {
+        alert(d.error);
         return;
       }
 
-      render(data);
+      // tampilkan kartu
+      document.getElementById("card").style.display = "block";
+
+      // isi tampilan web
+      vno.innerText = d.no;
+      vnama.innerText = d.nama;
+      valamat.innerText = d.alamat;
+      vasrama.innerText = d.asrama;
+      vstatus.innerText = d.status;
+      vtagihan.innerText = "Rp " + d.tagihan.toLocaleString();
+      vket.innerText = d.keterangan;
+      vket.className = d.keterangan === "LUNAS" ? "lunas" : "belum";
+
+      tbody.innerHTML = "";
+      d.rincian.forEach(r => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${r.nama}</td>
+            <td>Rp ${r.nominal.toLocaleString()}</td>
+            <td class="${r.status === "LUNAS" ? "lunas" : "belum"}">${r.status}</td>
+          </tr>`;
+      });
+
+      vbayar.innerText = "Rp " + d.totalTerbayar.toLocaleString();
+      vsisa.innerText = "Rp " + d.totalBelum.toLocaleString();
+
+      // isi data ke AREA CETAK
+      isiPDF(d);
     })
-    .catch(() => {
-      document.getElementById("loading").classList.remove("show");
+    .catch(err => {
+      document.getElementById("loading").style.display = "none";
       alert("Gagal mengambil data");
+      console.error(err);
     });
 }
 
-function render(d) {
-  const el = document.getElementById("hasil");
-  el.style.display = "block";
+/* =======================
+   ISI DATA UNTUK PDF
+======================= */
+function isiPDF(d) {
+  document.getElementById("pdf-nama").innerText = d.nama;
+  document.getElementById("pdf-no").innerText = d.no;
+  document.getElementById("pdf-asrama").innerText = d.asrama;
+  document.getElementById("pdf-bayar").innerText = "Rp " + d.totalTerbayar.toLocaleString();
+  document.getElementById("pdf-sisa").innerText = "Rp " + d.totalBelum.toLocaleString();
 
-  el.innerHTML = `
-    <div id="area-cetak" class="card-hasil">
-      <h2>Kartu Pembayaran Santri</h2>
+  // nomor dokumen unik
+  document.getElementById("pdf-doc").innerText =
+    "KPS-" + new Date().getTime();
 
-      <div class="meta">
-        <span id="no-dokumen"></span>
-        <span id="tgl-cetak"></span>
-      </div>
+  // tanggal cetak
+  document.getElementById("pdf-tanggal").innerText =
+    new Date().toLocaleString("id-ID");
 
-      <table class="info">
-        <tr><td>Nomor</td><td>${d.no}</td></tr>
-        <tr><td>Nama</td><td id="nama-santri">${d.nama}</td></tr>
-        <tr><td>Alamat</td><td>${d.alamat}</td></tr>
-        <tr><td>Asrama</td><td>${d.asrama}</td></tr>
-        <tr>
-          <td>Status</td>
-          <td class="${d.keterangan === 'LUNAS' ? 'lunas' : 'belum'}">
-            ${d.keterangan}
-          </td>
-        </tr>
-      </table>
-
-      <table class="detail">
-        <thead>
-          <tr>
-            <th>Jenis Pembayaran</th>
-            <th>Nominal</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${d.rincian.map(r => `
-            <tr>
-              <td>${r.nama}</td>
-              <td>Rp ${r.nominal.toLocaleString("id-ID")}</td>
-              <td class="${r.status === 'LUNAS' ? 'lunas' : 'belum'}">${r.status}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-
-      <div class="rekap">
-        <div class="box hijau">
-          <span>Total Terbayar</span>
-          <strong>Rp ${d.totalTerbayar.toLocaleString("id-ID")}</strong>
-        </div>
-        <div class="box merah">
-          <span>Sisa Tanggungan</span>
-          <strong>Rp ${d.totalBelum.toLocaleString("id-ID")}</strong>
-        </div>
-      </div>
-    </div>
-
-    <button class="btn-print" onclick="cetakPDF()">🖨 Cetak / Simpan PDF</button>
-  `;
-
-  generateDokumen(d.no);
-}
-
-/* ===============================
-   NOMOR DOKUMEN & TANGGAL CETAK
-   =============================== */
-function generateDokumen(noPembayaran) {
-  const now = new Date();
-
-  const tanggalCetak = now.toLocaleDateString("id-ID", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
+  let html = "";
+  d.rincian.forEach(r => {
+    html += `
+      <tr>
+        <td>${r.nama}</td>
+        <td>Rp ${r.nominal.toLocaleString()}</td>
+        <td>${r.status}</td>
+      </tr>`;
   });
-
-  const ymd =
-    now.getFullYear().toString() +
-    String(now.getMonth() + 1).padStart(2, "0") +
-    String(now.getDate()).padStart(2, "0");
-
-  const random = Math.floor(1000 + Math.random() * 9000);
-  const noDokumen = `KP-${ymd}-${noPembayaran}-${random}`;
-
-  document.getElementById("no-dokumen").innerText =
-    `Nomor Dokumen : ${noDokumen}`;
-
-  document.getElementById("tgl-cetak").innerText =
-    `Tanggal Cetak : ${tanggalCetak}`;
+  document.getElementById("pdf-rincian").innerHTML = html;
 }
 
-/* ===============================
-   CETAK PDF (1 HALAMAN, AMAN)
-   =============================== */
+/* =======================
+   CETAK PDF (1 HALAMAN)
+======================= */
 function cetakPDF() {
-  const element = document.getElementById("area-cetak");
-  const nama = document.getElementById("nama-santri").innerText
-    .replace(/[^a-zA-Z0-9 ]/g, "")
-    .trim();
-
-  const opt = {
-    margin: 0,
-    filename: `kartu pembayaran santri (${nama}).pdf`,
-    image: { type: "jpeg", quality: 1 },
-    html2canvas: {
-      scale: 2,
-      scrollY: 0,
-      windowHeight: element.scrollHeight
-    },
-    jsPDF: {
-      unit: "mm",
-      format: "a4",
-      orientation: "portrait"
-    },
-    pagebreak: { mode: ["avoid-all", "css"] }
-  };
-
-  html2pdf().set(opt).from(element).save();
+  window.print();
 }
-
