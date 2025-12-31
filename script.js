@@ -146,3 +146,4 @@ function cetakPDF() {
 
   html2pdf().set(opt).from(element).save();
 }
+
